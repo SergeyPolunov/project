@@ -1,0 +1,36 @@
+version: "3.7"
+
+services:
+
+  php:
+    build: .
+    container_name: free_php
+    links:
+      - mysql
+    env_file:
+      - docker-compose.env
+    volumes:
+      - ../:/app
+      - ./php/php.ini:/usr/local/etc/php/php.ini
+      - ./php/conf.d/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      - ./php/conf.d/error_reporting.in i:/usr/local/etc/php/conf.d/error_reporting.ini
+
+  nginx:
+    image: nginx
+    container_name: free_nginx
+    volumes:
+      - ../:/app
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+
+  mysql:
+    image: library/mysql:5.7
+    container_name: free_mysql
+    platform: linux/x86_64
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - "MYSQL_DATABASE=free_db"
+      - "MYSQL_ROOT_PASSWORD=secret"
+    volumes:
+      - ./storage/mysql:/var/lib/mysql
