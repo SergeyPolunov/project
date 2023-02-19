@@ -12,7 +12,9 @@
       <a href="/admin/comments">
         <i class="fa fa-commenting"></i> <span>Комментарии</span>
         <span class="pull-right-container">
-{{--          <small class="label pull-right bg-green">{{$newCommentsCount}}</small>--}}
+            @if($newCommentsCount)
+                <small class="label pull-right bg-green">{{$newCommentsCount}}</small>
+            @endif
         </span>
       </a>
     </li>

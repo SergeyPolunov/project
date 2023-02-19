@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 
@@ -17,6 +18,7 @@ use Carbon\Carbon;
  * @method static paginate(int $int)
  * @method static where(string $string, $slug)
  * @method static orderBy(string $string, string $string1)
+ * @method static find($postID)
  * @property int|mixed user_id
  * @property mixed|string image
  * @property int|mixed category_id
@@ -27,6 +29,7 @@ use Carbon\Carbon;
  * @property mixed tags
  * @property mixed date
  * @property mixed id
+ * @property mixed comment
  */
 class Post extends Model
 {
@@ -46,6 +49,11 @@ class Post extends Model
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
     }
 
     public function tags(): BelongsToMany
@@ -264,5 +272,10 @@ class Post extends Model
     public static function getRecentPosts()
     {
         return self::orderBy('date', 'desc')->take(4)->get();
+    }
+
+    public function getComments(): Collection
+    {
+        return $this->comments()->where('status', 1)->get();
     }
 }

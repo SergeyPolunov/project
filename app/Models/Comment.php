@@ -6,14 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property mixed text
+ * @property mixed post_id
+ * @property mixed user_id
+ * @property int|mixed status
+ * @method static where(string $string, int $int)
+ */
 class Comment extends Model
 {
     use HasFactory;
-
-    /**
-     * @var int|mixed
-     */
-    private $status;
 
     public function post(): BelongsTo
     {
@@ -22,7 +24,7 @@ class Comment extends Model
 
     public function author(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function allow(): void
@@ -40,9 +42,10 @@ class Comment extends Model
     public function toggleStatus()
     {
         if ($this->status == 0) {
-            return $this->allow();
+            $this->allow();
+            return;
         }
-        return $this->disAllow();
+        $this->disAllow();
     }
 
     public function remove()

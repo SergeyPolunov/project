@@ -45,9 +45,11 @@
                   </td>
                   <td>
                   @if($comment->status == 1)
-					<a href="/admin/comments/toggle/{{$comment->id}}" class="fa fa-lock"></a> 
+{{--					<a href="/admin/comments/toggle/{{$comment->id}}" class="fa fa-lock"></a> --}}
+					<a href="{{route('comments.toggle', ['comment' => $comment])}}" class="fa fa-lock"></a>
                   @else
-	                  <a href="/admin/comments/toggle/{{$comment->id}}" class="fa fa-thumbs-o-up"></a> 
+{{--	                  <a href="/admin/comments/toggle/{{$comment->id}}" class="fa fa-thumbs-o-up"></a> --}}
+	                  <a href="{{route('comments.toggle', ['comment' => $comment])}}" class="fa fa-thumbs-o-up"></a>
                   @endif
                   {{Form::open(['route'=>['comments.destroy', $comment->id], 'method'=>'delete'])}}
 	                  <button onclick="return confirm('are you sure?')" type="submit" class="delete">

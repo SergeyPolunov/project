@@ -115,7 +115,6 @@
 
                                 <div class="comment-text">
                                     <h5>{{$comment->author->name}}</h5>
-
                                     <p class="comment-date">
                                         {{$comment->created_at->diffForHumans()}}
                                     </p>
@@ -128,8 +127,6 @@
                     @if(Auth::check())
                         <div class="leave-comment"><!--leave comment-->
                             <h4>Leave a reply</h4>
-
-
                             <form class="form-horizontal contact-form" role="form" method="post" action="/comment">
                                 {{csrf_field()}}
                                 <input type="hidden" name="post_id" value="{{$post->id}}">
