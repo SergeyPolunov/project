@@ -6,10 +6,12 @@ use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\CommentsController as AdminCommentsController;
+use App\Http\Controllers\Admin\SubscribersController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SubsController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -28,6 +30,8 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/post/{slug}', [HomeController::class, 'show'])->name('post.show');
 Route::get('/tag/{slug}', [HomeController::class, 'tag'])->name('tag.show');
 Route::get('/category/{slug}', [HomeController::class, 'category'])->name('category.show');
+Route::post('/subscribe', [SubsController::class, 'subscribe'])->name('subscribe');
+Route::get('/verify/{token}', [SubsController::class, 'verify'])->name('subscribe.verify');
 
 
 Route::middleware('auth')->group(function () {
@@ -53,4 +57,5 @@ Route::prefix('admin')->middleware('admin')->group(function () {
     Route::resource('/comments', AdminCommentsController::class);
     Route::get('/comments/toggle/{comment}', [AdminCommentsController::class, 'toggle'])->name('comments.toggle');
     Route::delete('/comments/{id}/destroy', [AdminCommentsController::class, 'destroy']);
+    Route::resource('/subscribers', SubscribersController::class);
 });

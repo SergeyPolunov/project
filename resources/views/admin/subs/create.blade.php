@@ -14,7 +14,7 @@
 
     <!-- Main content -->
     <section class="content">
-	{{Form::open(['route'	=>	'subscribers.store'])}}
+	{{Form::open(['route' => 'subscribers.store'])}}
       <!-- Default box -->
       <div class="box">
         <div class="box-header with-border">
