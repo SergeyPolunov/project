@@ -49,13 +49,15 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::prefix('admin')->middleware('admin')->group(function () {
-    Route::resource('/', DashboardController::class);
-    Route::resource('/categories', CategoriesController::class);
-    Route::resource('/tags', TagsController::class);
-    Route::resource('/posts', PostsController::class);
-    Route::resource('/users', UsersController::class);
-    Route::resource('/comments', AdminCommentsController::class);
+    Route::resources([
+        '/' => DashboardController::class,
+        'categories' => CategoriesController::class,
+        'tags' => TagsController::class,
+        'posts' => PostsController::class,
+        'users' => UsersController::class,
+        'comments' => AdminCommentsController::class,
+        'subscribers' => SubscribersController::class,
+    ]);
     Route::get('/comments/toggle/{comment}', [AdminCommentsController::class, 'toggle'])->name('comments.toggle');
     Route::delete('/comments/{id}/destroy', [AdminCommentsController::class, 'destroy']);
-    Route::resource('/subscribers', SubscribersController::class);
 });

@@ -23,6 +23,5 @@ class AdminMiddleware
             return $next($request);
         }
         abort(404);
-        //wqewqe
     }
 }
